@@ -176,7 +176,13 @@ export const inline = {
   br: /^( {2,}|\\)\n(?!\s*$)/,
   del: noopTest,
   text: /^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/,
-  punctuation: /^([\spunctuation])/
+  punctuation: /^([\spunctuation])/,
+
+  // https://developer.mozilla.org/ja/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions
+  //ruby: /^\|([^\\n\|\{\}]{1,20}?)\{([^\\n\|\{\}]{1,50}?)\}/,
+  //ruby: /\|([^\\n]{1,20}?)\{([^\\n\|\{\}]{1,50}?)\}/,
+  //ruby: /^\|([^\\n]{1,20}?)\{([^\\n\|\{\}]{1,50}?)\}/,
+  ruby: /\|([^\\n]{1,20}?)\{([^\\n\|\{\}]{1,50}?)\}/,
 };
 
 // list of punctuation marks from CommonMark spec
@@ -299,4 +305,19 @@ inline.breaks = merge({}, inline.gfm, {
     .replace('\\b_', '\\b_| {2,}\\n')
     .replace(/\{2,\}/g, '*')
     .getRegex()
+});
+
+/*
+ 日本語小説
+ */
+inline.novel = merge({}, inline.normal, {
+    ruby: /\|([^\\n]{1,20})\{([^\\n\|\{\}]{1,50})\}/,
+    //ruby: /^\|([^\\n]{1,20})\{([^\\n\|\{\}]{1,50})\}/,
+    upright: /\+([^\\n\+]{1,4}?)+/,
+    em: {
+        start: /^_|\*/,
+        middle: /^()\*(?=\S)([\s\S]*?\S)\*(?!\*)|^_(?=\S)([\s\S]*?\S)_(?!_)/,
+        endAst: /\*(?!\*)/g,
+        endUnd: /_(?!_)/g
+      },
 });

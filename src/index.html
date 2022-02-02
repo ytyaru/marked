@@ -1,0 +1,27 @@
+<!--<script type="module" src="marked-spec.js"></script>-->
+<!--
+<ul>
+<li><a href="marked-spec.html">marked-spec.html</a>
+</ul>
+-->
+<meta charset="utf-8">
+<script type="module" src="marked.js"></script>
+<script type="module">
+import {marked} from './marked.js';
+window.addEventListener('DOMContentLoaded', (event) => {
+    console.log("DOMContentLoaded");
+    console.log(marked)
+    const text = `# 見出し
+
+　本文。|漢字{かんじ}。*強調*。|極大消滅呪文{メドローア}。*もういっちょ強調*。
+`;
+    console.log(marked(text, {novel:true}))
+    document.body.innerHTML += `<textarea rows="10" cols="80">${text}</textarea><br>` + marked(text);
+});
+window.addEventListener('load', (event) => {
+    console.log("load");
+});
+window.addEventListener('beforeunload', (event) => {
+    console.log("beforeunload");
+});
+</script>

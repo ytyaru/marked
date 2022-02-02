@@ -163,4 +163,8 @@ export class Renderer {
   text(text) {
     return text;
   }
+
+  ruby(rb, rt) {
+    return `<ruby>${rb}<rp>（</rp><rt>${rt}</rt><rp>）</rp></ruby>`;
+  }
 }

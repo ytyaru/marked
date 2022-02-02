@@ -229,6 +229,7 @@ export class Parser {
         }
       }
 
+      console.log(i, token.type)
       switch (token.type) {
         case 'escape': {
           out += renderer.text(token.text);
@@ -264,6 +265,12 @@ export class Parser {
         }
         case 'del': {
           out += renderer.del(this.parseInline(token.tokens, renderer));
+          break;
+        }
+        case 'ruby': {
+          console.log(this.parseInline(token.tokens, renderer))
+          out += renderer.ruby(this.parseInline(token.tokens, renderer));
+          //out += renderer.ruby(token.rb, token.rt);
           break;
         }
         case 'text': {

@@ -765,4 +765,20 @@ export class Tokenizer {
       };
     }
   }
+
+  ruby(src) {
+    const cap = this.rules.inline.ruby.exec(src);
+    console.log(cap)
+    if (cap) {
+      const token = {
+        type: 'ruby',
+        raw: cap[0],
+        rb: cap[1],
+        rt: cap[2],
+      }
+      //this.lexer.inline(token.text, token.tokens);
+      console.log(token)
+      return token;
+    }
+  }
 }

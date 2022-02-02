@@ -448,6 +448,22 @@ export class Lexer {
         continue;
       }
 
+      // ruby
+      if (token = this.tokenizer.ruby(src)) {
+        console.log(src)
+        //src = src.replace(new RegExp(`${token.raw}`, ''));
+        //src = src.substring(token.raw.length);// サロゲートペアがあると字数が狂う？
+        
+        //src = src.substring(src.indexOf(token.raw) + token.raw.length);// サロゲートペアがあると字数が狂う？
+        src = src.substring(0, src.indexOf(token.raw)) + src.substring(src.indexOf(token.raw) + token.raw.length);
+
+        console.log(token.raw)
+        console.log(token.raw.length)
+        console.log(src)
+        tokens.push(token);
+        continue;
+      }
+
       // text
       // prevent inlineText consuming extensions by clipping 'src' to extension start
       cutSrc = src;
